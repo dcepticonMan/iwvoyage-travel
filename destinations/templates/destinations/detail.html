@@ -3,31 +3,31 @@
 
 {% block content %}
 <style>
+  /* Cover & overlay */
   .site-cover {
     background-image: url('{{ destination.hero.url }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    position: relative;
   }
-
   .site-cover.overlay::before {
-    background: rgba(0, 0, 0, 0.5);
-    position: absolute;
     content: "";
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
 
+  /* Tags */
   .tag-container {
     margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    z-index: 2;
+    position: relative;
   }
-
   .tag-box {
     display: inline-block;
     padding: 0.4rem 0.75rem;
@@ -36,38 +36,65 @@
     border-radius: 5px;
     font-size: 0.9rem;
     color: #333;
-    text-decoration: none;
-    transition: all 0.2s ease-in-out;
+    transition: background-color .2s, color .2s, border-color .2s;
   }
-
   .tag-box:hover {
     background-color: #3fd0d4;
-    color: white;
+    color: #fff;
     border-color: #3fd0d4;
   }
 
+  /* Page intro animation */
   .fadeIn {
     animation: fadeIn 1s ease-in-out both;
   }
-
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hero title */
+  .post-entry h1 {
+    margin-top: 10vh;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    line-height: 1.1;
+    color: #fff;
+    z-index: 2;
+    position: relative;
+  }
+
+  /* On small screens, tighten up */
+  @media (max-width: 768px) {
+    .post-entry h1 {
+      margin-top: 10vh;
+      font-size: 2.5rem;
+    }
+    .post-entry {
+      padding: 0 1rem;
+    }
   }
 </style>
 
 <div class="site-cover site-cover-sm same-height overlay single-page fadeIn">
   <div class="container">
     <div class="row same-height justify-content-center">
-      <div class="col-md-6">
+      <!-- use full-width on mobile, half on md+ -->
+      <div class="col-12 col-md-6">
         <div class="post-entry text-center">
-          <h1 class="mb-4" style="margin-top: 20%; font-size: 80px;">{{ destination }}</h1>
+          <h1>{{ destination }}</h1>
+          <!-- optional tags below title -->
+          <div class="tag-container">
+            {% for tag in destination.tags.all %}
+              <a href="{% url 'destinations:by_tag' tag.slug %}" class="tag-box">
+                {{ tag.name }}
+              </a>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 {% include 'menu.html' %}
 
 <section class="section fadeIn">
@@ -120,12 +147,12 @@
               </div>
             {% endif %}
           </div>
-          
+
 
           <h3 class="fadeIn">{{ destination.subheader_three|safe }}</h3>
           <p class="fadeIn">{{ destination.description_three|safe }}</p>
 
-          
+
 
           <hr style="margin-top: 70px;" class="fadeIn">
           <div class="pt-5 comment-wrap fadeIn"></div>

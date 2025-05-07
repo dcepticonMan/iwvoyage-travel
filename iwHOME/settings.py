@@ -5,7 +5,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-uzm_4#%u4t4#38k9_$a(sx$oq4%64n1q-i1cr2l$=09_a996r4'
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    'www.iwvoyage.com',
+    'iwvoyage.com',
+    'webapp-2580515.pythonanywhere.com',
+]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,6 +37,26 @@ INSTALLED_APPS = [
     'mediahub',
     'django.contrib.sitemaps',
 ]
+
+
+# CKEditor 5 configurations
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        # Choose the toolbar items you need
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'link', '|',
+            'bulletedList', 'numberedList', '|',
+            'blockQuote', 'insertTable', '|',
+            'undo', 'redo'
+        ],
+        'height': 300,
+        # You can add more CKEditor 5 config options here:
+        # https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editor-editorconfig-EditorConfig.html
+    }
+}
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

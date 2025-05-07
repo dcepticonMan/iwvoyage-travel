@@ -5,25 +5,26 @@
 {% block title %}Home - iwVoyage{% endblock %}
 
 {% block content %}
-    
+
         <!-- Include Navigation Menu -->
-  
+
     {% include 'menu.html' %}
   <!-- Full-Screen Slider -->
-        {% include 'index/slider.html' %} 
+        {% include 'index/slider.html' %}
 
 
     <!-- "What We Do" Section (Ensured Below Slider) -->
 
-        {% include 'index/whatwedo.html' %}
 
-        {% include 'index/itinirary.html' %}
-  
-        {% include 'index/gallery.html' %}
-        {% include 'index/banner.html' %}
-        {% include 'index/trends.html' %}
+            {% include 'index/whatwedo.html' %}
 
-      
+
+
+{% include 'index/gallery.html' %}
+{% include 'index/banner.html' %}
+{% include 'index/trends.html' %}
+
+
 
 
 {% endblock %}

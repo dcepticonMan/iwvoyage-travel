@@ -1,138 +1,157 @@
 {% load static %}
 
+<!-- ── Slider Styles ──────────────────────────────────────────────────────────── -->
 <style>
-    .slider-section {
-        width: 100vw;
-        height: 60vh;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 0 !important;
-        padding-bottom: 0 !important;
-    }
-    
-    .carousel {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .carousel-inner {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-    
-    .carousel-item {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        opacity: 0;
-        transition: opacity 2.5s linear;
-        z-index: 0;
-    }
-    
-    .carousel-item.active {
-        opacity: 1;
-        z-index: 1;
-    }
-    
-    .carousel-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-    
-    /* ── Caption Base: vertical stack, centered vertically ────────────────────── */
-    .carousel-caption {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        display: flex !important;
-        flex-direction: column;      /* stack title/subtitle/button */
-        justify-content: center;     /* vertical centering */
-        z-index: 5 !important;
-        color: white !important;
-        padding: 0 1rem;
-    }
-    
-    /* ── Alignment Variants: horizontal placement ─────────────────────────────── */
-.carousel-caption.left {
-    align-items: flex-start;
-    padding-left: 20%;    /* more space from the left edge! */
-    text-align: left;
-}
+  .slider-section {
+      width: 100vw;
+      height: 60vh;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+  }
 
-.carousel-caption.center {
-    align-items: center;
-    /* center needs no extra horizontal padding */
-    text-align: center;
-}
+  .carousel {
+      width: 100%;
+      height: 100%;
+  }
 
-.carousel-caption.right {
-    align-items: flex-end;
-    padding-right: 20%;   /* more space from the right edge! */
-    text-align: right;
-}
+  .carousel-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+  }
 
-    
-    /* ── Mobile fallback: keep stack, center everything ─────────────────────── */
-    @media (max-width: 768px) {
-        .carousel-caption {
-            align-items: center !important;
-            padding: 1rem !important;
-            text-align: center !important;
-        }
-    }
-    </style>
-    
-<!-- ── Slider Script ──────────────────────────────────────────────────────────── -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const carousel = document.querySelector('#carouselExampleAutoplaying');
-    const slides   = carousel.querySelectorAll('.carousel-item');
-    let idx = 0;
-    const delay = 10000; // 10s
+  /* Base slide positioning & fade setup */
+  .carousel-item {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0;
+      z-index: 0;
+  }
+  .carousel-item.active {
+      opacity: 1;
+      z-index: 1;
+  }
 
-    function next() {
-        slides[idx].classList.remove('active');
-        idx = (idx + 1) % slides.length;
-        slides[idx].classList.add('active');
-    }
+  /* Overlay on each slide */
+  .carousel-item::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 2;
+  }
 
-    setInterval(next, delay);
-});
-</script>
+  /* Image fit */
+  .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+  }
+
+  /* Fade transitions */
+  .carousel.carousel-fade .carousel-item {
+      transition: opacity 2.5s ease-in-out;
+      backface-visibility: hidden;
+  }
+
+  /* Caption Base: vertical stack, centered vertically */
+  .carousel-caption {
+      position: absolute;
+      top: 10; left: 0;
+      width: 100%; height: 100%;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 5 !important;       /* above overlay */
+      color: white !important;
+      padding: 0 1rem;
+  }
+
+  /* Button override: white border & text before click */
+  .carousel-caption .btn-outline-primary {
+      border-color: #fff !important;
+      color: #fff !important;
+  }
+  .carousel-caption .btn-outline-primary:hover,
+  .carousel-caption .btn-outline-primary:focus {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      border-color: #fff !important;
+      color: #fff !important;
+  }
+
+  /* Alignment Variants: horizontal placement */
+  .carousel-caption.left {
+      align-items: flex-start;
+      padding-left: 20%;
+      text-align: left;
+  }
+  .carousel-caption.center {
+      align-items: center;
+      text-align: center;
+  }
+  .carousel-caption.right {
+      align-items: flex-end;
+      padding-right: 20%;
+      text-align: right;
+  }
+
+  /* Mobile fallback: stack & center */
+  @media (max-width: 768px) {
+      .carousel-caption {
+          align-items: center !important;
+          padding: 1rem !important;
+          text-align: center !important;
+      }
+  }
+</style>
 
 <!-- ── Slider Markup ──────────────────────────────────────────────────────────── -->
 <section id="slider-section" class="slider-section">
-  <div id="carouselExampleAutoplaying" class="carousel">
+  <div
+    id="carouselExampleAutoplaying"
+    class="carousel slide carousel-fade"
+    data-bs-ride="carousel"
+    data-bs-interval="10000"
+    data-bs-pause="false"
+  >
     <div class="carousel-inner">
       {% for item in carousel_items %}
-      <div class="carousel-item {% if forloop.first %}active{% endif %}">
-        <img src="{{ item.image.url }}"
-             class="d-block w-100 img-fluid"
-             alt="{{ item.title|default:'Slide image' }}">
-        
-        <div class="carousel-caption {{ item.text_alignment }}">
-          {% if item.title %}
-          <h1 class="display-1 fw-bolder text-capitalize mb-4">
-            {{ item.title|safe }}
-          </h1>
-          {% endif %}
-          
-          {% if item.subtitle %}
-          <p class="fs-3 spaced-paragraph mb-4">
-            {{ item.subtitle|safe }}
-          </p>
-          {% endif %}
-          
-          {% if item.button_text and item.button_link %}
-          
-          <p><a href="{{ item.button_link }}" class="btn btn-sm btn-outline-primary">Book Now</a></p>
-          {% endif %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <img
+            src="{{ item.image.url }}"
+            class="d-block w-100 img-fluid"
+            alt="{{ item.title|default:'Slide image' }}"
+          >
+
+          <div class="carousel-caption {{ item.text_alignment }}">
+            {% if item.title %}
+              <h1 class="display-1 fw-bolder text-capitalize mb-4">
+                {{ item.title|safe }}
+              </h1>
+            {% endif %}
+
+            {% if item.subtitle %}
+              <p class="fs-3 spaced-paragraph mb-4">
+                {{ item.subtitle|safe }}
+              </p>
+            {% endif %}
+
+            {% if item.button_text and item.button_link %}
+              <p>
+                <a
+                  href="{{ item.button_link }}"
+                  class="btn btn-sm btn-outline-primary"
+                >{{ item.button_text }}</a>
+              </p>
+            {% endif %}
+          </div>
         </div>
-      </div>
       {% endfor %}
     </div>
   </div>
 </section>
+

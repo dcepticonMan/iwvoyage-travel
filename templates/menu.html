@@ -229,6 +229,12 @@
   display: block;
 }
 
+
+
+
+
+
+/* === SCROLL BEHAVIOR === */
 /* === SCROLL BEHAVIOR === */
 .navbar-scrolled {
   background-color: rgba(44, 51, 72, 0.9) !important;
@@ -236,8 +242,11 @@
 }
 
 .navbar-scrolled a {
-  color: white !important;
+  color: #848d92; !important;
 }
+
+
+
 </style>
 
 
@@ -274,16 +283,15 @@
             </ul>
           </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Tips & Planning</a>
-            <ul class="dropdown-menu">
+          <li class="dropdown"><a href="#"><span>Tips & Planning</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
               <li><a class="dropdown-item" href="{% url 'post:posts_by_category' 'packing-tips' %}">Packing Tips</a></li>
               <li><a class="dropdown-item" href="{% url 'post:posts_by_category' 'travel-trends' %}">Travel Trends</a></li>
               <li><a class="dropdown-item" href="{% url 'post:posts_by_category' 'airline' %}">Airlines</a></li>
               <li><a class="dropdown-item" href="{% url 'post:posts_by_category' 'airport' %}">Airport</a></li>
             </ul>
           </li>
-          
+
 
           <li class="dropdown"><a href="#"><span>Service</span> <i class="bi bi-chevron-down"></i></a>
             <ul>

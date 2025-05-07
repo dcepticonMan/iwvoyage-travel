@@ -120,11 +120,11 @@
     text-indent: -3000px;
     overflow: hidden;
     cursor: default;
-    opadestinations: 0.55;
+    opacity: 0.55;
 }
 
 .active.selector-add, .active.selector-remove {
-    opadestinations: 1;
+    opacity: 1;
 }
 
 .active.selector-add:hover, .active.selector-remove:hover {
@@ -157,7 +157,7 @@ a.selector-chooseall, a.selector-clearall {
     line-height: 16px;
     color: var(--body-quiet-color);
     text-decoration: none;
-    opadestinations: 0.55;
+    opacity: 0.55;
 }
 
 a.active.selector-chooseall:focus, a.active.selector-clearall:focus,
@@ -166,7 +166,7 @@ a.active.selector-chooseall:hover, a.active.selector-clearall:hover {
 }
 
 a.active.selector-chooseall, a.active.selector-clearall {
-    opadestinations: 1;
+    opacity: 1;
 }
 
 a.active.selector-chooseall:hover, a.active.selector-clearall:hover {
@@ -577,12 +577,12 @@ ul.timelist, .timelist li {
 }
 
 .related-widget-wrapper-link {
-    opadestinations: .6;
+    opacity: .6;
     filter: grayscale(1);
 }
 
 .related-widget-wrapper-link:link {
-    opadestinations: 1;
+    opacity: 1;
     filter: grayscale(0);
 }
 
