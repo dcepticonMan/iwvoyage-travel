@@ -1,0 +1,17 @@
+# Python bytecode
+*.py[cod]
+__pycache__/
+
+# Django database + logs
+db.sqlite3
+*.log
+
+# Uploaded media & generated files
+/media/
+/carousel_images/
+/carousel_mobile_images/
+/staticfiles_temp/
+
+# Virtual environments & env files
+/venv/
+*.env
